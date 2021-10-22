@@ -53,6 +53,7 @@ span  {
     margin: 0 auto;
     border-radius: 1rem;
     max-width: 375px;
+    min-width: 373px;
     background-image: linear-gradient(to top, #03045e, #002578, #004190, #005ca4, #0077b6);
     border: 3px solid #03045e;
 }
@@ -74,17 +75,17 @@ span  {
 
 .tasks {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .delete {
-    padding: .5em;
+    padding: .3em 1em;
     border-radius: 1rem;
     border: 2px solid #90E0EF;
     color: #90E0EF;
     font-weight: bold;
     text-align: center;
-    margin-left: 1em;
+    /* margin-left: 1em; */
 }
 
 .delete:hover,
@@ -97,6 +98,7 @@ span  {
 }
 
 .key-field {
+    margin-top: 1em;
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
     color: #90E0EF;
@@ -105,7 +107,7 @@ span  {
 
 .__key {
     text-align: center;
-    padding: .5em;
+    padding: 1em 1.5em;
     margin: .7em;
     border-radius: 1rem;
     border: 2px solid #90E0EF;
@@ -119,4 +121,14 @@ span  {
     border: 2px solid #fff;
     /* x-offset, y-offset, blur, spread */
     box-shadow: 0px 0px 5px 1px #90E0EF; 
+}
+
+button {
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
 }
