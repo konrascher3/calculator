@@ -128,12 +128,10 @@ del.addEventListener('click', () => {
     console.log('Reset')
     a = '';
     b = '';
+    total = '';
     currOp = '';
+    nextOp = '';
     currNum = 0;
-    console.log(a);
-    console.log(b);
-    console.log(currOp);
-    console.log(currNum);
     display.textContent = 0;
 })
 
