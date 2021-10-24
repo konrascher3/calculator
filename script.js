@@ -1,25 +1,48 @@
+// init
+const displayValue = document.querySelector('.total');
+const keys = document.querySelectorAll('.num');
+const operators = document.querySelectorAll('.op')
+
+let a = '';
+let b = '';
+let currOp = '';
+let currNum = 0;
+let total = '';
+
 function add(a, b) {
     let total = a + b;
+    console.log('Addition performed')
     addTotal(total);
+    returnPrevTotal(total);
 };
 
 function subtract(a, b) {
     let total = a - b;
     addTotal(total);
+    returnPrevTotal(total);
 };
 
 function multiply(a, b) {
     let total = a * b;
     addTotal(total);
+    returnPrevTotal(total);
 };
 
 function divide(a, b) {
     let total = a / b;
     addTotal(total);
+    returnPrevTotal(total);
 };
 
 function addTotal(total) {
     displayValue.textContent = `${total}`
+    // set b to total
+}
+
+function returnPrevTotal(total) {
+    let prevTotal = total;
+    console.log(prevTotal)
+    return prevTotal
 }
 
 function operate(currOp, a, b) {
@@ -27,6 +50,10 @@ function operate(currOp, a, b) {
     // Transform str to num
     a = Number(a);
     b = Number(b);
+    console.log('Operation performed')
+    console.log(a)
+    console.log(b)
+    console.log(currOp)
     // Call calc functions
     if (currOp === '+') {
         add(a, b);
@@ -39,29 +66,25 @@ function operate(currOp, a, b) {
     } 
 }
 
-// init
-const displayValue = document.querySelector('.total');
-const keys = document.querySelectorAll('.num');
-const operators = document.querySelectorAll('.op')
-
-let a = '';
-let b = '';
-let currOp = '';
-let currNum = 0;
-
 console.log(operators);
 
 // operator-keys eventListener
 operators.forEach((op) => {
     // Store operator-value
+    // If equal was not pressed but another operator, evaluate first
     op.addEventListener('click', (event) => {
-        currOp  = event.target.value;
-        console.log('Operator ' + currOp)
+        if (a && b && currOp) {
+            operate(currOp, a, b);
+            console.log('Operator ' + currOp)
+        } else {
+            currOp  = event.target.value;
+            console.log('Operator ' + currOp)
+        }
     });
-
 });
 
 // num keys eventListener
+
 keys.forEach((key) => {
     key.addEventListener('click', (event) => {
         key = event.target.textContent;
@@ -72,8 +95,17 @@ keys.forEach((key) => {
         } else {
             displayValue.textContent = '';
             // Make sure a was entered BEFORE operator was clicked.
-            if (currOp && a) {
-                // Store b-value
+            // Perform a on b
+            // If prevTotal then replace a with prevTotal
+
+            if (currOp && a && b) {
+                // a = prevTotal
+                // b = key
+                // perform operation
+                console.log('Operator ' + currOp)
+                a = returnPrevTotal();
+                b = key;
+            } else if (currOp && a) {
                 b = b.concat(key);
                 displayValue.textContent = b;
                 console.log('b-value ' + b);
