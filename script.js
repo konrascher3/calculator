@@ -9,6 +9,12 @@ let total = '';
 let currOp = '';
 let nextOp = '';
 
+// Display current Operation
+const aValue = document.querySelector('.a-value');
+const bValue = document.querySelector('.b-value');
+const opValue = document.querySelector('.op-value');
+
+
 function add(a, b) {
     let total = a + b;
     console.log('Addition performed')
@@ -40,18 +46,26 @@ function divide(a, b) {
 // }
 
 function setTotal(value) {
+    aValue.textContent = ` ${a}`;
+    bValue.textContent = ` ${b}=`;
+    opValue.textContent = `${currOp}`;
     total = value
+    a = total;
     b = '';
-    console.log('new a total set successfully: ' + total)
+    console.log('a for next calculation: ' + total)
 }
 
 function displayValue(value) {
-    display.textContent = value
+    if  (String(value).includes('.')) {
+        display.textContent = Number(value).toFixed(2)
+    } else {
+        display.textContent = Number(value)
+    }
+    
 }
 
 function operate(currOp, a, b) {
-    // If second number is operator; perform operation with same number
-    // Transform str to num
+        // Transform str to num
 
     a = Number(a);
     b = Number(b);
@@ -71,45 +85,55 @@ function operate(currOp, a, b) {
 
 console.log(operators);
 
+
 // operator-keys eventListener
 operators.forEach((op) => {
     // Store operator-value
     // If equal was not pressed but another operator, evaluate first with PREVIOUS operator
     op.addEventListener('click', (event) => {
-        if (a && b && currOp) {
-            nextOp  = event.target.value;
+        if (a && b && nextOp) {
+            currOp = nextOp;
+            operate(currOp, a, b);  
+        } else if (a && b && currOp) {
+            nextOp = event.target.value;
             operate(currOp, a, b);
-        } else {
-            currOp  = event.target.value;
-            console.log('Operator ' + currOp)
-        }
+        } else if (a && b && total) {
+            a = total;
+            currOp = event.target.value;
+            operate(currOp, a, b);
+        } 
+
+        currOp = event.target.value;
 
     });
+
 });
 
 // num keys eventListener
 keys.forEach((key) => {
     key.addEventListener('click', (event) => {
         // Evaluate for previous operator
-        if (nextOp) {
-            currOp = nextOp;
-        }
         if (!currOp) {
-            console.log('No operator yet');
             a = a.concat(event.target.value)
-            console.log(a)
-            console.log('a-value: ' + a)
+            console.log('a: ' + a)
             displayValue(a);
             
         } else if (currOp) {
-            console.log('Selected operator: ' + currOp)
-            if (total) {
-                a = total
-                console.log('a was set to previous total: ' + total)
-            }
             b = b.concat(event.target.value)
-            console.log('b-value: ' + b)
+            console.log('b: ' + b)
             displayValue(b);
+            // if (nextOp) {
+            //     currOp = nextOp;
+            // }
+            // console.log(nextOp);
+            // console.log('Selected operator: ' + currOp)
+            // if (total) {
+            //     a = total
+            //     console.log('a was set to previous total: ' + total)
+            // }
+            // b = b.concat(event.target.value)
+            // console.log('b-value: ' + b)
+            // displayValue(b);
         } 
     })
 })

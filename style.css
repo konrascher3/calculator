@@ -73,6 +73,11 @@ span  {
     color: #03045e;
 }
 
+.current-operation {
+    display: flex;
+    justify-content: end;
+}
+
 .tasks {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
