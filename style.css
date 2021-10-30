@@ -7,6 +7,10 @@ https://coolors.co/03045e-023e8a-0077b6-0096c7-00b4d8-48cae4-90e0ef-ade8f4-caf0f
     /* border: 1px solid magenta */
 }
 
+html {
+    background-color: grey;
+}
+
 body {
     font-size: 16px;
     font-family: 'Martel Sans', sans-serif;
@@ -59,11 +63,16 @@ span  {
 }
 
 .display {
+    display: flex;
+    font-family: 'Orbitron', sans-serif;
     margin: 1em 0em;
     background: #CAF0F8;
     padding: 0.5em;
     border-radius: 1rem;
+    height: 5em;
     border: 2px solid #03045e;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .current-operation, 
@@ -74,9 +83,11 @@ span  {
 }
 
 .current-operation {
+    height: 44px;
     display: flex;
     justify-content: end;
 }
+
 
 .tasks {
     display: grid;
@@ -90,6 +101,7 @@ span  {
     color: #90E0EF;
     font-weight: bold;
     text-align: center;
+    margin-top: .2em;
     /* margin-left: 1em; */
 }
 

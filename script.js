@@ -8,6 +8,7 @@ let b = '';
 let total = '';
 let currOp = '';
 let nextOp = '';
+let currentDisplayedValue = '';
 
 // Display current Operation
 const aValue = document.querySelector('.a-value');
@@ -36,8 +37,14 @@ function multiply(a, b) {
 
 function divide(a, b) {
     let total = a / b;
-    displayValue(total);
-    setTotal(total);
+    if (total === Infinity) {
+        reset();
+        display.textContent = 'err0r'
+    } else {
+        displayValue(total);
+        setTotal(total);
+    }
+    
 };
 
 // function addTotal(total) {
@@ -46,9 +53,9 @@ function divide(a, b) {
 // }
 
 function setTotal(value) {
-    aValue.textContent = ` ${a}`;
-    bValue.textContent = ` ${b}=`;
-    opValue.textContent = `${currOp}`;
+    // aValue.textContent = ` ${a}`;
+    // bValue.textContent = ` ${b}=`;
+    // opValue.textContent = `${currOp}`;
     total = value
     a = total;
     b = '';
@@ -58,10 +65,14 @@ function setTotal(value) {
 function displayValue(value) {
     if  (String(value).includes('.')) {
         display.textContent = Number(value).toFixed(2)
+        if (!b) {
+            b = value;
+            console.log(b)
+        }
     } else {
         display.textContent = Number(value)
     }
-    
+    currentDisplayedValue = value;
 }
 
 function operate(currOp, a, b) {
@@ -81,6 +92,17 @@ function operate(currOp, a, b) {
     } else if (currOp === '/') {
         divide(a, b);
     } 
+}
+
+function reset() {
+    a = '';
+    b = '';
+    display.textContent = 0
+    total = '';
+    currOp = '';
+    nextOp = '';
+    currNum = 0;
+    currentDisplayedValue = '';
 }
 
 console.log(operators);
@@ -104,6 +126,7 @@ operators.forEach((op) => {
         } 
 
         currOp = event.target.value;
+        // opValue.textContent = `${currOp}`;
 
     });
 
@@ -114,13 +137,24 @@ keys.forEach((key) => {
     key.addEventListener('click', (event) => {
         // Evaluate for previous operator
         if (!currOp) {
+            if (currentDisplayedValue) {
+                a = currentDisplayedValue
+            }
             a = a.concat(event.target.value)
             console.log('a: ' + a)
+            // aValue.textContent = ` ${a}`;
             displayValue(a);
             
         } else if (currOp) {
+            displayValue(0)
+            if (currentDisplayedValue) {
+                b = currentDisplayedValue
+            }
             b = b.concat(event.target.value)
             console.log('b: ' + b)
+
+            
+            // bValue.textContent = ` ${b}`
             displayValue(b);
             // if (nextOp) {
             //     currOp = nextOp;
@@ -150,12 +184,19 @@ const del = document.querySelector('.delete');
 
 del.addEventListener('click', () => {
     console.log('Reset')
-    a = '';
-    b = '';
-    total = '';
-    currOp = '';
-    nextOp = '';
-    currNum = 0;
-    display.textContent = 0;
+    reset();
+    // display.textContent = 0;
+    // aValue.textContent = ``;
+    // bValue.textContent = ``;
+    // opValue.textContent = ` `;
 })
 
+// Comma-button clicked
+const comma = document.querySelector('.com')
+
+comma.addEventListener('click', () => {
+
+    // Add comma to display value
+    currentDisplayedValue = currentDisplayedValue + '.';
+    displayValue(currentDisplayedValue);
+})
