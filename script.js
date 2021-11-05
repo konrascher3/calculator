@@ -21,45 +21,8 @@ const display1 = document.querySelector('.display-1');
 // Display current Operation
 const display2 = document.querySelector('.display-2')
 
-// Calc helper-functions
-
-// function add(a, b) {
-//     let total = a + b;
-//     console.log('Addition performed')
-//     displayValue(total);
-//     setTotal(total);
-// };
-
-// function subtract(a, b) {
-//     let total = a - b;
-//     displayValue(total);
-//     setTotal(total);
-// };
-
-// function multiply(a, b) {
-//     let total = a * b;
-//     displayValue(total);
-//     setTotal(total);
-// };
-
-// function divide(a, b) {
-//     let total = a / b;
-//     if (total === Infinity) {
-//         reset();
-//         display.textContent = 'err0r'
-//     } else {
-//         displayValue(total);
-//         setTotal(total);
-//     }
-    
-// };
-
 function operate() {
 
-    console.log('Operation performed')
-    console.log(lastOperation)
-    console.log(result)
-    console.log(dis2Num)
     // Call calc functions
     if (lastOperation === '+') {
         result = parseFloat(result) + parseFloat(dis2Num);
@@ -131,20 +94,6 @@ operators.forEach((operator) => {
         // Move result to history and zero display2 for next number
         clear(operatorName);  
         lastOperation = operatorName;
-        // if (a && b && nextOp) {
-        //     currOp = nextOp;
-        //     operate(currOp, a, b);  
-        // } else if (a && b && currOp) {
-        //     nextOp = event.target.value;
-        //     operate(currOp, a, b);
-        // } else if (a && b && total) {
-        //     a = total;
-        //     currOp = event.target.value;
-        //     operate(currOp, a, b);
-        // } 
-
-        // currOp = event.target.value;
-        // // opValue.textContent = `${currOp}`;
 
     });
 
