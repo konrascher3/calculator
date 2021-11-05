@@ -59,6 +59,7 @@ function clear (name = '') {
     
     display1.textContent = dis1Num;
 
+    // TODO: If results exceeds 15 characters, shorten number
     display2.textContent = result;
     dis2Num = '';
 }
@@ -70,14 +71,29 @@ numbers.forEach((number) => {
         if (event.target.innerText === '.' && !isDecimal) {
             isDecimal = true;
         } else if (event.target.innerText === '.' && isDecimal) {
-            // TODO: Put 0 in front of decimal-point if no number
+            
             return;
         }
         
-        // TODO: Don't concat if first num is only 0
-        dis2Num += event.target.value;
-        // TODO: If number exceeds 151 characters, shorten number
+        // Don't concat if first num is only 0
+        if (display2.textContent === '0' && event.target.innerText === '0') {
+            return;
+        } else {
+            // Put 0 in front of decimal-point if no number
+            if (display2.textContent === '0' && event.target.innerText === '.') {
+                dis2Num = 0;
+            }
+            dis2Num += event.target.value;
+        }
+        
+        // TODO: If number exceeds 15 characters, shorten number
         display2.textContent = dis2Num; 
+
+        // Error message
+
+        if (display2.textContent == Infinity) {
+            display2.textContent = 'Uh oh, you broke the calculator :('
+        }
     })
 })
 
@@ -99,6 +115,7 @@ operators.forEach((operator) => {
         // Move result to history and zero display2 for next number
         clear(operatorName);  
         lastOperation = operatorName;
+   
 
     });
 
@@ -208,3 +225,6 @@ function operateKey(key) {
         }
     })
 };
+
+
+
