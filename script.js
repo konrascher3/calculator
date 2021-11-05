@@ -54,8 +54,11 @@ function reset() {
 }
 
 function clear (name = '') {
+    // TODO: Stop history from overflowing
     dis1Num += `${dis2Num} ${name} `;
+    
     display1.textContent = dis1Num;
+
     display2.textContent = result;
     dis2Num = '';
 }
@@ -67,11 +70,13 @@ numbers.forEach((number) => {
         if (event.target.innerText === '.' && !isDecimal) {
             isDecimal = true;
         } else if (event.target.innerText === '.' && isDecimal) {
+            // TODO: Put 0 in front of decimal-point if no number
             return;
         }
         
-        // Don't concat if first num is only 0
+        // TODO: Don't concat if first num is only 0
         dis2Num += event.target.value;
+        // TODO: If number exceeds 151 characters, shorten number
         display2.textContent = dis2Num; 
     })
 })
