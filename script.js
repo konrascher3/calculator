@@ -54,15 +54,6 @@ const display2 = document.querySelector('.display-2')
     
 // };
 
-function setTotal(value) {
-
-    total = value
-    a = total;
-    b = '';
-    console.log('a for next calculation: ' + total)
-    display.textContent = total
-}
-
 function operate() {
 
     console.log('Operation performed')
@@ -116,6 +107,7 @@ numbers.forEach((number) => {
             return;
         }
         
+        // Don't concat if first num is only 0
         dis2Num += event.target.value;
         display2.textContent = dis2Num; 
     })
@@ -198,3 +190,67 @@ backspace.addEventListener('click', () => {
         return;
     }
 })
+
+// Keyboard-binds
+
+window.addEventListener('keydown', (event) => {
+    console.log(event.key)
+    if (
+        event.key === '0' ||   
+        event.key === '1' ||     
+        event.key === '2' ||
+        event.key === '3' ||
+        event.key === '4' ||
+        event.key === '5' ||
+        event.key === '6' ||
+        event.key === '7' ||
+        event.key === '8' ||
+        event.key === '9' ||
+        event.key === '.' 
+        ) {
+            keyboardNum(event.key);
+    } else if (
+        event.key === '+' ||
+        event.key === '/' ||
+        event.key === '%' 
+        ) {
+            operateKey(event.key);
+    } else if (event.key === '*') {
+        operateKey('×');
+    } else if (event.key === '-' || event.key === '–') {
+        operateKey('–');
+    } else if (event.key === 'Enter') {
+        if (!dis1Num || !dis2Num) return;
+        isDecimal = false;
+        operate();
+        clear();
+        display2.textContent = result;
+        dis2Num = result;
+        dis1Num = '';
+    } else if (event.key === 'Backspace') {
+        let strNum = display2.textContent
+        if (strNum.length > 1) {
+            display2.textContent = strNum.substring(0, strNum.length - 1);
+            dis2Num = parseFloat(display2.textContent);
+        } else {
+            display2.textContent = 0;
+            dis2Num = '';
+        }
+    }
+});
+
+function keyboardNum(key) {
+    numbers.forEach(button => {
+        if (button.textContent === key) {
+            button.click();
+        }
+    })
+};
+
+function operateKey(key) {
+    operators.forEach(button => {
+        if (button.textContent === key) {
+            button.click();
+        }
+    })
+};
