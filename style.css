@@ -4,11 +4,11 @@ https://coolors.co/03045e-023e8a-0077b6-0096c7-00b4d8-48cae4-90e0ef-ade8f4-caf0f
 * {
     margin: 0;
     box-sizing: border-box;
-    /* border: 1px solid magenta */
+    border: 1px solid magenta
 }
 
 html {
-    background-color: grey;
+    background-color: #f5faff;
 }
 
 body {
@@ -59,11 +59,13 @@ span  {
     max-width: 375px;
     min-width: 373px;
     background-image: linear-gradient(to top, #03045e, #002578, #004190, #005ca4, #0077b6);
-    border: 3px solid #03045e;
+    border: 2px solid #03045e;
 }
 
 .display {
     display: flex;
+    flex-direction: column;
+    /* justify-content: flex-end; */
     font-family: 'Orbitron', sans-serif;
     margin: 1em 0em;
     background: #CAF0F8;
@@ -71,42 +73,49 @@ span  {
     border-radius: 1rem;
     height: 5em;
     border: 2px solid #03045e;
-    justify-content: flex-end;
-    align-items: center;
+    
+    /* justify-content: flex-end; */
+    /* align-items: center; */
 }
 
-.current-operation, 
-.total {
+.display-2 {
     font-size: 1.5rem;
     text-align: right;
     color: #03045e;
 }
 
-.current-operation {
-    height: 44px;
-    display: flex;
-    justify-content: end;
+.display-1 {
+    text-align: right;
+    color: #03055ed0;
 }
-
 
 .tasks {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    justify-content: space-evenly;
+    
 }
 
-.delete {
-    padding: .3em 1em;
+.all-clear, .backspace, .clear-entry, .procent {
+    padding: .5em 1em;
+    /* margin-left: .5em; */
     border-radius: 1rem;
     border: 2px solid #90E0EF;
     color: #90E0EF;
     font-weight: bold;
     text-align: center;
     margin-top: .2em;
+    /* max-width: 50%; */
     /* margin-left: 1em; */
 }
 
-.delete:hover,
-.delete:focus {
+.all-clear:hover,
+.all-clear:focus,
+.backspace:hover,
+.backspace:focus,
+.clear-entry:hover,     
+.clear-entry:focus,
+.procent:hover,     
+.procent:focus {
     cursor: pointer;
     color: #fff;
     border: 2px solid #fff;
@@ -139,6 +148,8 @@ span  {
     /* x-offset, y-offset, blur, spread */
     box-shadow: 0px 0px 5px 1px #90E0EF; 
 }
+
+
 
 button {
     background: none;

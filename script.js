@@ -1,202 +1,200 @@
 // init
-const display = document.querySelector('.total');
-const keys = document.querySelectorAll('.num');
-const operators = document.querySelectorAll('.op')
-console.log('Back to init again!!!')
-let a = '';
-let b = '';
-let total = '';
-let currOp = '';
-let nextOp = '';
-let currentDisplayedValue = '';
+let dis1Num = '';  // num 1
+let dis2Num = '';  // num 2
+let result = null;  // result
+let lastOperation = '';  // last operator
+let isDecimal = false; 
+
+const numbers = document.querySelectorAll('.num');  // Number buttons
+const operators = document.querySelectorAll('.op')  // Operator buttons
+const equal = document.querySelector('.eq');  //  Equal button
+const comma = document.querySelector('.com')  // Comma button
+const clearEntry = document.querySelector('.clear-entry'); //  CE 
+const backspace = document.querySelector('.backspace'); // Backspace button
+const allClear = document.querySelector('.all-clear');  // All-clear button
+
+const percent = document.querySelector('.percent')  // Percent button
+
+// Display previous operation
+const display1 = document.querySelector('.display-1');
 
 // Display current Operation
-const aValue = document.querySelector('.a-value');
-const bValue = document.querySelector('.b-value');
-const opValue = document.querySelector('.op-value');
+const display2 = document.querySelector('.display-2')
 
+// Calc helper-functions
 
-function add(a, b) {
-    let total = a + b;
-    console.log('Addition performed')
-    displayValue(total);
-    setTotal(total);
-};
+// function add(a, b) {
+//     let total = a + b;
+//     console.log('Addition performed')
+//     displayValue(total);
+//     setTotal(total);
+// };
 
-function subtract(a, b) {
-    let total = a - b;
-    displayValue(total);
-    setTotal(total);
-};
+// function subtract(a, b) {
+//     let total = a - b;
+//     displayValue(total);
+//     setTotal(total);
+// };
 
-function multiply(a, b) {
-    let total = a * b;
-    displayValue(total);
-    setTotal(total);
-};
+// function multiply(a, b) {
+//     let total = a * b;
+//     displayValue(total);
+//     setTotal(total);
+// };
 
-function divide(a, b) {
-    let total = a / b;
-    if (total === Infinity) {
-        reset();
-        display.textContent = 'err0r'
-    } else {
-        displayValue(total);
-        setTotal(total);
-    }
+// function divide(a, b) {
+//     let total = a / b;
+//     if (total === Infinity) {
+//         reset();
+//         display.textContent = 'err0r'
+//     } else {
+//         displayValue(total);
+//         setTotal(total);
+//     }
     
-};
-
-// function addTotal(total) {
-//     displayValue.textContent = `${total}`
-//     // set b to total
-// }
+// };
 
 function setTotal(value) {
-    // aValue.textContent = ` ${a}`;
-    // bValue.textContent = ` ${b}=`;
-    // opValue.textContent = `${currOp}`;
+
     total = value
     a = total;
     b = '';
     console.log('a for next calculation: ' + total)
+    display.textContent = total
 }
 
-function displayValue(value) {
-    if  (String(value).includes('.')) {
-        display.textContent = Number(value).toFixed(2)
-        if (!b) {
-            b = value;
-            console.log(b)
-        }
-    } else {
-        display.textContent = Number(value)
-    }
-    currentDisplayedValue = value;
-}
-
-function operate(currOp, a, b) {
-        // Transform str to num
-
-    a = Number(a);
-    b = Number(b);
+function operate() {
 
     console.log('Operation performed')
+    console.log(lastOperation)
+    console.log(result)
+    console.log(dis2Num)
     // Call calc functions
-    if (currOp === '+') {
-        add(a, b);
-    } else if (currOp === '-') {
-        subtract(a, b);
-    } else if (currOp === '*') {
-        multiply(a, b);
-    } else if (currOp === '/') {
-        divide(a, b);
-    } 
+    if (lastOperation === '+') {
+        result = parseFloat(result) + parseFloat(dis2Num);
+        return result;
+    } else if (lastOperation === '–') {
+        result = parseFloat(result) - parseFloat(dis2Num);
+        return result;
+    } else if (lastOperation === '×') {
+        result = parseFloat(result) * parseFloat(dis2Num);
+        return result;
+    } else if (lastOperation ===    '/') {
+        result = parseFloat(result) / parseFloat(dis2Num);
+        return result;
+    } else if (lastOperation === '%') {
+        result = parseFloat(result) % parseFloat(dis2Num);
+        return result;
+    }
 }
 
 function reset() {
-    a = '';
-    b = '';
-    display.textContent = 0
-    total = '';
-    currOp = '';
-    nextOp = '';
-    currNum = 0;
-    currentDisplayedValue = '';
+    dis1Num = '';
+    dis2Num = '';
+    result = null;
+    lastOperation = '';
+    isDecimal = false; 
+    display1.textContent = '...';
+    display2.textContent = 0;
+
 }
 
-console.log(operators);
+function clear (name = '') {
+    dis1Num += `${dis2Num} ${name} `;
+    display1.textContent = dis1Num;
+    display2.textContent = result;
+    dis2Num = '';
+}
 
+// num keys eventListener
+numbers.forEach((number) => {
+    number.addEventListener('click', (event) => {
+        // Check for comma in number; don't add another one if already pressed
+        if (event.target.innerText === '.' && !isDecimal) {
+            isDecimal = true;
+        } else if (event.target.innerText === '.' && isDecimal) {
+            return;
+        }
+        
+        dis2Num += event.target.value;
+        display2.textContent = dis2Num; 
+    })
+})
 
 // operator-keys eventListener
-operators.forEach((op) => {
-    // Store operator-value
-    // If equal was not pressed but another operator, evaluate first with PREVIOUS operator
-    op.addEventListener('click', (event) => {
-        if (a && b && nextOp) {
-            currOp = nextOp;
-            operate(currOp, a, b);  
-        } else if (a && b && currOp) {
-            nextOp = event.target.value;
-            operate(currOp, a, b);
-        } else if (a && b && total) {
-            a = total;
-            currOp = event.target.value;
-            operate(currOp, a, b);
-        } 
+operators.forEach((operator) => {
+    operator.addEventListener('click', (event) => {
 
-        currOp = event.target.value;
-        // opValue.textContent = `${currOp}`;
+        if (!dis2Num) return;
+        isDecimal = false;
+        const operatorName = event.target.innerText;
+
+        // Perform calc if operands and operator is defined
+        if (dis1Num && dis2Num && lastOperation){
+            operate();
+        } else {
+            result = parseFloat(dis2Num);
+        }
+
+        // Move result to history and zero display2 for next number
+        clear(operatorName);  
+        lastOperation = operatorName;
+        // if (a && b && nextOp) {
+        //     currOp = nextOp;
+        //     operate(currOp, a, b);  
+        // } else if (a && b && currOp) {
+        //     nextOp = event.target.value;
+        //     operate(currOp, a, b);
+        // } else if (a && b && total) {
+        //     a = total;
+        //     currOp = event.target.value;
+        //     operate(currOp, a, b);
+        // } 
+
+        // currOp = event.target.value;
+        // // opValue.textContent = `${currOp}`;
 
     });
 
 });
 
-// num keys eventListener
-keys.forEach((key) => {
-    key.addEventListener('click', (event) => {
-        // Evaluate for previous operator
-        if (!currOp) {
-            if (currentDisplayedValue) {
-                a = currentDisplayedValue
-            }
-            a = a.concat(event.target.value)
-            console.log('a: ' + a)
-            // aValue.textContent = ` ${a}`;
-            displayValue(a);
-            
-        } else if (currOp) {
-            displayValue(0)
-            if (currentDisplayedValue) {
-                b = currentDisplayedValue
-            }
-            b = b.concat(event.target.value)
-            console.log('b: ' + b)
-
-            
-            // bValue.textContent = ` ${b}`
-            displayValue(b);
-            // if (nextOp) {
-            //     currOp = nextOp;
-            // }
-            // console.log(nextOp);
-            // console.log('Selected operator: ' + currOp)
-            // if (total) {
-            //     a = total
-            //     console.log('a was set to previous total: ' + total)
-            // }
-            // b = b.concat(event.target.value)
-            // console.log('b-value: ' + b)
-            // displayValue(b);
-        } 
-    })
-})
-
-// If equal is pressed
-const equal = document.querySelector('.eq');
+// Equal button
 
 equal.addEventListener('click', () => {
-    operate(currOp, a, b);
+    // Only evaluate if operands and operator is defined
+    if (!dis1Num || !dis2Num) return;
+    isDecimal = false;
+    operate();
+    clear();
+    display2.textContent = result;
+    dis2Num = result;
+    dis1Num = '';
 });
 
-// If AC is pressed
-const del = document.querySelector('.delete');
+// AC is pressed
 
-del.addEventListener('click', () => {
-    console.log('Reset')
+allClear.addEventListener('click', () => {
+    console.log('All-clear')
     reset();
-    // display.textContent = 0;
-    // aValue.textContent = ``;
-    // bValue.textContent = ``;
-    // opValue.textContent = ` `;
 })
 
-// Comma-button clicked
-const comma = document.querySelector('.com')
+// CE Button
 
-comma.addEventListener('click', () => {
+clearEntry.addEventListener('click', () => {
+    display2.textContent = '0';
+    dis2Num = '';
+})
 
-    // Add comma to display value
-    currentDisplayedValue = currentDisplayedValue + '.';
-    displayValue(currentDisplayedValue);
+// DEL Button
+
+backspace.addEventListener('click', () => {
+    // Only delete last decimal if length of number is greater 1;
+    // If delete is pressed for number length less than 1, return 0; 
+    let strNum = display2.textContent
+    if (strNum.length > 1) {
+        display2.textContent = strNum.substring(0, strNum.length - 1);
+        dis2Num = parseFloat(display2.textContent);
+    } else {
+        return;
+    }
 })
