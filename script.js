@@ -9,7 +9,7 @@ const numbers = document.querySelectorAll('.num');  // Number buttons
 const operators = document.querySelectorAll('.op')  // Operator buttons
 const equal = document.querySelector('.eq');  //  Equal button
 const comma = document.querySelector('.com')  // Comma button
-const clearEntry = document.querySelector('.clear-entry'); //  CE 
+// const clearEntry = document.querySelector('.clear-entry'); //  CE 
 const backspace = document.querySelector('.backspace'); // Backspace button
 const allClear = document.querySelector('.all-clear');  // All-clear button
 
@@ -143,10 +143,10 @@ allClear.addEventListener('click', () => {
 
 // CE Button
 
-clearEntry.addEventListener('click', () => {
-    display2.textContent = '0';
-    dis2Num = '';
-})
+// clearEntry.addEventListener('click', () => {
+//     display2.textContent = '0';
+//     dis2Num = '';
+// })
 
 // DEL Button
 
