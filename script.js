@@ -60,7 +60,12 @@ function clear (name = '') {
     display1.textContent = dis1Num;
 
     // TODO: If results exceeds 15 characters, shorten number
-    display2.textContent = result;
+    if (result % 1 != 0) {
+        display2.textContent = result.toFixed(2);
+    } else {
+        display2.textContent = result; 
+    }
+    
     dis2Num = '';
 }
 
@@ -86,8 +91,12 @@ numbers.forEach((number) => {
             dis2Num += event.target.value;
         }
         
-        // TODO: If number exceeds 15 characters, shorten number
-        display2.textContent = dis2Num; 
+        if (display2.textContent.includes('.')) {
+            display2.textContent = parseFloat(dis2Num).toFixed(2);
+        } else {
+            display2.textContent = parseFloat(dis2Num); 
+        }
+        
 
         // Error message
 
@@ -129,7 +138,6 @@ equal.addEventListener('click', () => {
     isDecimal = false;
     operate();
     clear();
-    display2.textContent = result;
     dis2Num = result;
     dis1Num = '';
 });
@@ -158,7 +166,8 @@ backspace.addEventListener('click', () => {
         display2.textContent = strNum.substring(0, strNum.length - 1);
         dis2Num = parseFloat(display2.textContent);
     } else {
-        return;
+        display2.textContent = '0';
+        dis2Num = '';
     }
 })
 
